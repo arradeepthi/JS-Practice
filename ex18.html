@@ -15,12 +15,12 @@
     <h1>ROLL THE DICE</h1>
     <p>Click on the button below to roll the dice.</p>
     <button id="btn" onClick="rollDice()">Roll It</button><br><br>
-    <image id="dice-img" src="/images/dice1.png" height="400px" width="400px"></image>
+    <img id="dice-img" src="images/dice1.png" height="400px" width="400px"></img>
 
     <script>
         rollDice = ()=>{
             let idx=Math.floor(Math.random()*6)+1;
-            document.getElementById("dice-img").src=`/images/dice${idx}.png`;
+            document.getElementById("dice-img").src=`images/dice${idx}.png`;
         }
     </script>
 </body>
