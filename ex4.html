@@ -12,19 +12,16 @@
     </style>
 </head>
 <body>
-    <h1>RANDOM COLOR FLIPPER</h1>
-    <p>Build a button that changes the background color of the page to a random color every time it's clicked.</p>
-    <button onClick="check()">Click!!!</button>
+    <h1>Reverse words in a string</h1>
+    <input type="text" id="sentence" placeholder="Enter a string">
+    <button id="btn" onClick="reverse()">Reverse</button>
     <p id="result"></p>
-
     <script>
-        let cols=["red", "blue", "green", "yellow", "purple", "orange", "pink", "cyan", "lime", "teal"];
-
-        check = ()=>{
-            let randomIndex=Math.floor(Math.random()*cols.length);
-            let col=cols[randomIndex];
-            document.body.style.backgroundColor=col;
-            document.getElementById("result").innerHTML=`The background color is now: ${col}`;
+        reverse=()=>{
+            let s=document.getElementById("sentence").value;
+            let rev=s.split(" ").reverse().join(" ");
+            document.getElementById("result").innerHTML="The reversed string is: " + rev;
+            document.getElementById("btn").innerHTML="Count Again";
         }
     </script>
 </body>

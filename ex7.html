@@ -9,51 +9,27 @@
             text-align: center;
             font-family: Arial, sans-serif;
         }
-        .done{
-            text-decoration: line-through;
-            color: gray;
-        }
-        
     </style>
 </head>
 <body>
-    <h1>SIMPLE TO-DO LIST</h1>
-    <p>Created a simple to-do list where you can add tasks, strike off tasks that are finished, delete tasks that are not required anymore.</p>
-    <input type="text" id="task-input" placeholder="Enter a Task">
-    <button id="add-task-btn" onclick="addTask()">Add Task</button>
-    <div id="task-list"></div>
+    <h1>PALINDROME CHECKER</h1>
+    <p>Enter a string to check if the string is palindrome or not.</p>
+    <input type="text" id="input-text" placeholder="Enter a string">
+    <button onClick="checkPalindrome()">Check</button>
+    <p id="result"></p>
 
     <script>
-        addTask=()=>{
-            let task=document.getElementById("task-input").value.trim();
-            if(task.trim() === ""){
-                alert("Please enter a valid task!");
-                return;
+        checkPalindrome = () =>{
+            let str=document.getElementById("input-text").value.trim();
+            let rev=str.split('').reverse().join('');
+            if(str===rev){
+                document.getElementById("result").innerHTML="The string is a palindrome.";
             }
-            const taskDiv=document.createElement("div");
-            const taskItem=document.createElement("span");
-            taskItem.textContent=task;
-            taskItem.style.marginRight="10px";
-
-            taskItem.onclick=function(){
-                taskItem.classList.toggle("done");
+            else{
+                document.getElementById("result").innerHTML="The string is not a palindrome.";
             }
-            
-            const deleteBtn=document.createElement("button");
-            deleteBtn.textContent="Delete";
-            deleteBtn.style.marginLeft="10px";
-
-            deleteBtn.onclick=function(){
-                taskDiv.remove();
-            }
-            
-            taskDiv.appendChild(taskItem);
-            taskDiv.appendChild(deleteBtn);;
-            document.getElementById("task-list").appendChild(taskDiv);
-            
-
-            document.getElementById("task-input").value="";
-            document.getElementById("task-input").focus();
+            document.getElementById("input-text").value = "";
+            document.getElementById("input-text").focus();
         }
     </script>
 </body>

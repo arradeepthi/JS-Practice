@@ -12,24 +12,31 @@
     </style>
 </head>
 <body>
-    <h1>PALINDROME CHECKER</h1>
-    <p>Enter a string to check if the string is palindrome or not.</p>
-    <input type="text" id="input-text" placeholder="Enter a string">
-    <button onClick="checkPalindrome()">Check</button>
-    <p id="result"></p>
+    <h1>COUNTDOWN TIMER</h1>
+    <p>This a Countdown timer. Enter the number to start the countdown.</p>
+    <input type="number" id="num" placeholder="Enter a number">
+    <button onClick="check()" id="btn">Check</button>
+    <h1 id="result"></h1>
 
     <script>
-        checkPalindrome = () =>{
-            let str=document.getElementById("input-text").value.trim();
-            let rev=str.split('').reverse().join('');
-            if(str===rev){
-                document.getElementById("result").innerHTML="The string is a palindrome.";
+        check = ()=>{
+            let n=parseInt(document.getElementById("num").value);
+            if(isNaN(n) || n<0){
+                document.getElementById("result").innerHTML="Please enter a valid number!";
+                return;
             }
-            else{
-                document.getElementById("result").innerHTML="The string is not a palindrome.";
-            }
-            document.getElementById("input-text").value = "";
-            document.getElementById("input-text").focus();
+            let timer=setInterval(()=>{
+                if(n==0){
+                    document.getElementById("result").innerHTML="Time's Up!!";
+                    clearInterval(timer);
+                    document.getElementById("num").hidden=true;
+                    document.getElementById("btn").hidden=true;
+                }
+                    else{
+                    document.getElementById("result").innerHTML=n;
+                    n--;
+                }
+            },1000);
         }
     </script>
 </body>

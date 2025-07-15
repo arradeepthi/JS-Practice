@@ -9,27 +9,51 @@
             text-align: center;
             font-family: Arial, sans-serif;
         }
+        .done{
+            text-decoration: line-through;
+            color: gray;
+        }
+        
     </style>
 </head>
 <body>
-    <h1>RANDOM QUOTE GENERATOR</h1>
-    <p>Click the button to generate a random quote.</p>
-    <button onClick="quote()" id="quote-btn">Get Quote</button>
-    <p id="result"></p>
-    
+    <h1>SIMPLE TO-DO LIST</h1>
+    <p>Created a simple to-do list where you can add tasks, strike off tasks that are finished, delete tasks that are not required anymore.</p>
+    <input type="text" id="task-input" placeholder="Enter a Task">
+    <button id="add-task-btn" onclick="addTask()">Add Task</button>
+    <div id="task-list"></div>
+
     <script>
-        let quotes=[
-            "The only limit to our realization of tomorrow is our doubts of today.",
-            "Life is 10% what happens to us and 90% how we react to it.",
-            "The best way to predict the future is to create it.",
-            "You miss 100% of the shots you don't take.",
-            "Success is not final, failure is not fatal: It is the courage to continue that counts."
-        ]
-        quote=()=>{
-            let randomIndex=Math.floor(Math.random()*quotes.length);
-            let randomQuote=quotes[randomIndex];
-            document.getElementById("result").innerHTML=randomQuote;
-            document.getElementById("quote-btn").innerHTML="Get Another Quote";
+        addTask=()=>{
+            let task=document.getElementById("task-input").value.trim();
+            if(task.trim() === ""){
+                alert("Please enter a valid task!");
+                return;
+            }
+            const taskDiv=document.createElement("div");
+            const taskItem=document.createElement("span");
+            taskItem.textContent=task;
+            taskItem.style.marginRight="10px";
+
+            taskItem.onclick=function(){
+                taskItem.classList.toggle("done");
+            }
+            
+            const deleteBtn=document.createElement("button");
+            deleteBtn.textContent="Delete";
+            deleteBtn.style.marginLeft="10px";
+
+            deleteBtn.onclick=function(){
+                taskDiv.remove();
+            }
+            
+            taskDiv.appendChild(taskItem);
+            taskDiv.appendChild(deleteBtn);;
+            document.getElementById("task-list").appendChild(taskDiv);
+            
+
+            document.getElementById("task-input").value="";
+            document.getElementById("task-input").focus();
         }
     </script>
 </body>

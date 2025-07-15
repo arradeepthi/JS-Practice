@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASK-12</title>
+    <style>
+        body{
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        #char-count{
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>CHARACTER COUNT</h1>
+    <p>Enter a string to count the number of characters. The character count is updated dynamically.</p>
+    <textarea id="input-text" rows="10" cols="70" placeholder="Type your text"></textarea>
+    <div id="char-count">Character Count: 0</div> 
+
+    <script>
+        document.getElementById("input-text").addEventListener("input", function(){
+            let text=document.getElementById("input-text").value;
+            let count=text.length;
+            document.getElementById("char-count").innerHTML=`Character Count: ${count}`;
+        });
+    </script>
+</body>
+</html>

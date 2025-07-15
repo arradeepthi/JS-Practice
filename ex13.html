@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASK-13</title>
+    <style>
+        body{
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>LIVE WORD AND CHARACTER COUNTER </h1>
+    <p>Type your text below to see the live character and word count.</p>
+    <textarea id="input-text" rows="10" cols="70" placeholder="Type your text"></textarea>
+    <div id="char-count">Character Count: 0</div>
+    <div id="word-count">Word Count: 0</div>
+    <script>
+        document.getElementById("input-text").addEventListener("input", function(){
+            let text=document.getElementById("input-text");
+            let inputText=text.value;
+            let characterCount=inputText.length;
+            let words=inputText.trim().split(/\s+/);
+            let wordCount=inputText.trim() ===""? 0 : words.length;
+            document.getElementById("char-count").innerHTML=`Character Count: ${characterCount}`;
+            document.getElementById("word-count").innerHTML=`Word Count: ${wordCount}`;
+            text.focus();
+        })
+    </script>
+</body>
+</html>

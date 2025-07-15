@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASK-17</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>DYNAMIC COLOR BOX OR CIRCLE GENERATOR</h1>
+    <p id="p1">Click the button to generate a random color box or circle.</p>
+    <button id="btn1" onClick="generateCirlce()">Cirlce</button>
+    <button id="btn2" onClick="generateBox()">Box</button>
+    <div id="result"></div>
+
+    <script>
+        generateCirlce =() =>{
+            document.getElementById("p1").style.display="none";
+            document.getElementById("btn2").style.display="none";
+            document.getElementById("btn1").style.display="none";
+            let res=document.getElementById("result");
+            res.innerHTML="How do you want the circle to be?? <br><br>";
+            res.innerHTML+=`<input type="number" id="radius" placeholder="Enter the radius"> <br><br>
+                            <input type="color" id="color" value="#000000"> <br><br>
+                            <button id="cbtn">Generate Circle</button>`;
+            document.getElementById("cbtn").addEventListener("click", function(){
+                let radius=document.getElementById("radius").value;
+                let color=document.getElementById("color").value;
+                document.getElementById("result").innerHTML="";
+                if(!radius){
+                    document.getElementById("result").innerHTML="Please enter a valid value for the radius !";
+                }else{
+                    radius=parseInt(radius);
+                    let circle=document.createElement("div");
+                    circle.style.width=radius+"px";
+                    circle.style.height=radius+"px";
+                    circle.style.borderRadius="50%";
+                    circle.style.backgroundColor=color;
+                    circle.style.margin="10px auto";
+                    res.appendChild(circle);
+                    res.appendChild(document.createElement("br"));
+                    res.innerHTML+=`<button id="reset">Reset</button>`;
+                    document.getElementById("reset").addEventListener("click", function(){
+                        document.getElementById("result").innerHTML="";
+                        document.getElementById("p1").style.display="block";
+                        document.getElementById("btn2").style.display="inline";
+                        document.getElementById("btn1").style.display="inline";
+                    })
+                }
+            })
+        };
+
+        generateBox=()=>{
+            document.getElementById("p1").style.display="none";
+            document.getElementById("btn1").style.display="none";
+            document.getElementById("btn2").style.display="none";
+            let res=document.getElementById("result");
+            res.innerHTML="How do you want the box to be?? <br><br>";
+            res.innerHTML+=`<input type="number" id="width" placeholder="Enter the width"> <br><br>
+                            <input type="number" id="height" placeholder="Enter the height"> <br><br>
+                            <input type="color" id="color" value="#000000"> <br><br>
+                            <button id="bbtn">Generate Box</button>`;
+            document.getElementById("bbtn").addEventListener("click", function(){
+                let width=document.getElementById("width").value;
+                let height=document.getElementById("height").value;
+                let color=document.getElementById("color").value;
+                document.getElementById("result").innerHTML="";
+                if(!width || !height){
+                    document.getElementById("result").innerHTML="Please enter valid values for width and height!";
+                }else{
+                    width=parseInt(width);
+                    height=parseInt(height);         
+                    let box=document.createElement("div");
+                    box.style.width=width+"px";
+                    box.style.height=height+"px";
+                    box.style.backgroundColor=color;
+                    box.style.margin="10px auto";
+                    res.appendChild(box);
+                    res.appendChild(document.createElement("br"));
+                    res.innerHTML+=`<button id="reset">Reset</button>`;
+                    document.getElementById("reset").addEventListener("click",function(){
+                        document.getElementById("result").innerHTML="";
+                        document.getElementById("p1").style.display="block";
+                        document.getElementById("btn2").style.display="inline";
+                        document.getElementById("btn1").style.display="inline";
+                    })      
+                }
+            })
+        };
+    </script>
+</body>
+</html>

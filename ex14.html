@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASK-14</title>
+    <style>
+        body{
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>RANDOM QUOTE GENERATOR</h1>
+    <p>Click the button to generate a random quote.</p>
+    <button onClick="quote()" id="quote-btn">Get Quote</button>
+    <p id="result"></p>
+    
+    <script>
+        let quotes=[
+            "The only limit to our realization of tomorrow is our doubts of today.",
+            "Life is 10% what happens to us and 90% how we react to it.",
+            "The best way to predict the future is to create it.",
+            "You miss 100% of the shots you don't take.",
+            "Success is not final, failure is not fatal: It is the courage to continue that counts."
+        ]
+        quote=()=>{
+            let randomIndex=Math.floor(Math.random()*quotes.length);
+            let randomQuote=quotes[randomIndex];
+            document.getElementById("result").innerHTML=randomQuote;
+            document.getElementById("quote-btn").innerHTML="Get Another Quote";
+        }
+    </script>
+</body>
+</html>
