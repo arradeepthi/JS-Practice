@@ -18,13 +18,20 @@
 <body>
     <h1>CHARACTER COUNT</h1>
     <p>Enter a string to count the number of characters. The character count is updated dynamically.</p>
-    <textarea id="input-text" rows="10" cols="70" placeholder="Type your text"></textarea>
+    <textarea id="input-text" rows="10" cols="50" placeholder="Type your text" ></textarea>
     <div id="char-count">Character Count: 0</div> 
+    <div id="alert"></div>
 
     <script>
         document.getElementById("input-text").addEventListener("input", function(){
             let text=document.getElementById("input-text").value;
             let count=text.length;
+            if(count>99){
+                let alt=document.getElementById("alert");
+                alt.innerText="Max Limit is 100.";
+                alt.style.color="red";
+                this.value=text.slice(0,100);
+            }
             document.getElementById("char-count").innerHTML=`Character Count: ${count}`;
         });
     </script>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASK-20</title>
+    <style>
+        body{
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>SHOW/HIDE PASSWORD</h1>
+    <p>Create a basic password input where users can toggle visibility.</p>
+    <input type="password" id="pwd" placeholder="Enter password">
+    <button id="btn" onClick="showPwd()">Show Password</button>
+
+    <script>
+        showPwd=()=>{
+            let pass=document.getElementById("pwd");
+            if(pass.type==="password"){
+                pass.type="text";
+                document.getElementById("btn").innerText=`Hide Password`;
+            }else{
+                pass.type="password";
+                document.getElementById("btn").innerText=`Show Password`;
+            }
+        }
+    </script>
+</body>
+</html>

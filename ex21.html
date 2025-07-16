@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASK-21</title>
+    <style>
+        body{
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>SIMPLE CALCULATOR</h1>
+    <input type="number" placeholder="Enter number 1" id="n1">
+    <input type="number" placeholder="Enter number 2" id="n2">
+    <br><br>
+    <button onClick="add()">Add</button>
+    <button onClick="sub()">Subtract</button>
+    <button onClick="mul()">Multiply</button>
+    <button onclick="div()">Divide</button>
+    <button onclick="reset()">Reset</button>
+    <div id="alert"></div>
+    <div id="result"></div>
+
+    <script>
+        add = () => {
+            let aVal = document.getElementById("n1").value;
+            let bVal = document.getElementById("n2").value;
+            if (aVal === "" || bVal === "") {
+                document.getElementById("alert").innerText = "Please enter valid numbers";
+                document.getElementById("result").innerText = "";
+                return;
+            }
+            let a = Number(aVal);
+            let b = Number(bVal);
+            document.getElementById("alert").innerText = "";
+            document.getElementById("result").innerText = `${a} + ${b} = ${a + b}`;
+        };
+
+        sub = () => {
+            let aVal = document.getElementById("n1").value;
+            let bVal = document.getElementById("n2").value;
+            if (aVal === "" || bVal === "") {
+                document.getElementById("alert").innerText = "Please enter valid numbers";
+                document.getElementById("result").innerText = "";
+                return;
+            }
+            let a = Number(aVal);
+            let b = Number(bVal);
+            document.getElementById("alert").innerText = "";
+            document.getElementById("result").innerText = `${a} - ${b} = ${a - b}`;
+        };
+        mul = () => {
+            let aVal = document.getElementById("n1").value;
+            let bVal = document.getElementById("n2").value;
+            if (aVal === "" || bVal === "") {
+                document.getElementById("alert").innerText = "Please enter valid numbers";
+                document.getElementById("result").innerText = "";
+                return;
+            }
+            let a = Number(aVal);
+            let b = Number(bVal);
+            document.getElementById("alert").innerText = "";
+            document.getElementById("result").innerText = `${a} x ${b} = ${a * b}`;
+        };
+        div=()=>{
+            let aVal = document.getElementById("n1").value;
+            let bVal = document.getElementById("n2").value;
+            if (aVal === "" || bVal === "") {
+                document.getElementById("alert").innerText = "Please enter valid numbers";
+                document.getElementById("result").innerText = "";
+                return;
+            }
+            else{
+                let a = Number(aVal);
+                let b = Number(bVal);
+                document.getElementById("alert").innerText="";
+                if(b===0){
+                    document.getElementById("alert").innerText="Cannot divide a number by 0";
+                }else
+                document.getElementById("result").innerText=`${a} / ${b} =${a/b}`; 
+            }
+        }
+        reset=()=>{
+            document.getElementById("result").innerText="";
+            document.getElementById("alert").innerText="";
+            document.getElementById("n1").value="";
+            document.getElementById("n2").value="";
+            document.getElementById("n1").focus();
+        }
+
+    </script>
+</body>
+</html>

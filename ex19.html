@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASK-19</title>
+    <style>
+        body{
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        #bulb-img{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>BULB ON AND OFF</h1>
+    <p>Click on the button to turn on the bulb.</p>
+    <button onClick="turn()" id="btn">BULB ON</button>
+    <br>
+    <img id="bulb-img" src="images/turned-off.png" height="300px" width="300px">
+    
+    <script>
+        let isOn=false;
+        turn = () =>{
+            if(!isOn){
+                document.getElementById("bulb-img").src=`images/turned-on.png`;
+                document.getElementById("btn").innerText="BULB OFF";
+                isOn=true;
+            }else{
+                document.getElementById("bulb-img").src=`images/turned-off.png`;
+                document.getElementById("btn").innerText="BULB ON";
+                isOn=false;
+            }
+        }
+    </script>
+</body>
+</html>

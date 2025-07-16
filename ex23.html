@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASK-23</title>
+    <style>
+        body{
+                text-align: center;
+                font-family: Arial, sans-serif;
+            }
+    </style>
+</head>
+<body>
+    <h1>PASSWORD STRENGTH CHECKER</h1>
+    <p>Enter your password below:</p>
+    <input type="password" id="pwd">
+    <br><br>
+    <button onClick="checkStrength()">Check Strength</button>
+    <br><br>
+    <div id="res"></div>
+
+    <script>
+        checkStrength = ()=>{
+            let pwd=document.getElementById("pwd").value;
+            let res=document.getElementById("res");
+            if(pwd.length<6){
+                res.innerHTML="Weak Password!"
+                res.style.color="red";
+            }
+            else if(
+                pwd.length<8 ||
+                !/[A-Z]/.test(pwd)||
+                !/[0-9]/.test(pwd)
+                ){
+                res.innerHTML="Medium Password!"
+                res.style.color="orange";
+            }
+            else if(
+                pwd.length>=8 && 
+                /[A-Z]/.test(pwd) &&
+                /[a-z]/.test(pwd) &&
+                /[0-9]/.test(pwd) && 
+                /[@#$%^&*!]/.test(pwd)
+            ){
+                res.innerHTML="Strong Password!"
+                res.style.color="green";
+            }
+            else{
+                res.innerHTML="Medium Password!"
+                res.style.color="orange";
+            }
+        }
+    </script>
+</body>
+</html>
