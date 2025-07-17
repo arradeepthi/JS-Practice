@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task-24</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .emojis{
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .emoji.selected{
+            transform: scale(1.4);
+            filter: drop-shadow(2px 2px 4px #444);
+        }
+        #result{
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: green;
+        }
+    </style>
+</head>
+<body onLoad="load()">
+    <h1>EMOJI RATING COMPONENT</h1>
+    <div class="emojis">
+        <span class="emoji" data-label="Angry">😡</span>
+        <span class="emoji" data-label="disappoint">😑</span>
+        <span class="emoji" data-label="sad">😕</span>
+        <span class="emoji" data-label="ok">🙂</span>
+        <span class="emoji" data-label="happy">😍</span>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        const emojis = document.querySelectorAll(".emoji");
+        const message=document.getElementById("result");
+        emojis.forEach(emoji =>{
+            emoji.addEventListener('click', () =>{
+                emojis.forEach(e => e.classList.remove('selected'));
+                emoji.classList.add('selected');
+                const label=emoji.dataset.label;
+                message.innerHTML=`You rated: ${label}`;
+                //instead of innerHTML we can use: textContent
+                localStorage.setItem('rating', label); 
+                //local storage is a feature in your browser that allows your website to store the data permanently - even if the page is refreshed or the browser is closed.
+                //It stores the rating.
+                //to access it later we can use:
+                //const savedRating=localStorage.getItem('rating')
+                //it stays saved until user clears the browser data.
+            });
+        });
+
+        load = () =>{
+            const savedRating=localStorage.getItem('rating');
+            if(savedRating){
+                emojis.forEach(emoji => {
+                    if(emoji.dataset.label===savedRating){
+                        emoji.classList.add('selected');
+                        message.innerHTML=`You rated: ${savedRating}`;
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

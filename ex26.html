@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASK-26</title> 
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .image{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        .image img{
+            width: 200px;
+            height: auto;
+        }
+        button{
+            padding: 10px 15px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>IMAGE CAROUSEL/SLIDER</h1>
+    <div class="image">
+        <button id="prev">&#8249;</button>
+        <img id="img" src="images/minion1.jpg">
+        <button id="next">&#8250;</button>
+    </div>
+
+    <script>
+        const imgs=[
+            "images/minion1.jpg",
+            "images/minion2.jpg",
+            "images/minion3.jpg",
+        ];
+        let current=0;
+        const img=document.getElementById("img");
+        const prev=document.getElementById("prev");
+        const next=document.getElementById("next");
+        
+        prev.addEventListener("click", function(){
+            current=(current-1+imgs.length)%imgs.length;
+            img.src=imgs[current];
+        });
+        
+        next.addEventListener("click", function(){
+            current=(current+1)%imgs.length;
+            img.src=imgs[current];
+        });
+
+        //autoplay
+        let interval=setInterval(nextSlide,3000);
+        function nextSlide(){
+            current=(current+1)%imgs.length;
+            img.src=imgs[current];
+        }
+        
+        //hover then stop slide logic
+        img.addEventListener("mouseenter", ()=>clearInterval(interval));
+        img.addEventListener("mouseleave", ()=>{
+            interval=setInterval(nextSlide, 3000);
+        });
+
+        //swipe logic for mobiles.
+        let startX=0;
+        img.addEventListener("touchstart", (e)=>{
+            startX=e.touches[0].clientX;
+        })
+
+        img.addEventListener("touchend", (e)=>{
+            let endX=e.changedTouches[0].clientX;
+            let diff=startX-endX;
+
+            if(Math.abs(diff)>50){
+                if(diff>0){
+                    current=(current+1)%imgs.length;
+                }else{
+                    current=(current-1+imgs.length)%imgs.length;
+                }
+                img.src=imgs[current];
+            }
+        });
+
+    </script>
+</body>
+</html>

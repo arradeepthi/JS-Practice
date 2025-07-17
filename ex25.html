@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASK-25</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>TYPING SPEED TEST</h1>
+    <p style="color:blue">Type the given text to know your typing speed.</p>
+    <div id="given-text"></div><br>
+    <textarea id="txt" rows="10" cols="50"></textarea>
+    <p id="result"></p>
+
+    <script>
+        let texts=[
+            "A lone lighthouse keeper, Thomas, watched the endless sea. Fog rolled in, obscuring the beam, and a small fishing boat was lost. He frantically flashed his light, guiding the vessel to safety. Exhausted, he realized the boat's captain was his estranged son, whom he hadn't seen for years. Thomas's heart swelled with joy as the boat neared the shore. The next morning, his son, a changed man, stood on the dock, ready to reconcile.",
+            "A young artist, Clara, found an old, unsigned painting at a flea market. It depicted a vibrant, fantastical landscape she'd never seen before. Each day she studied the painting, its details whispered secrets of a forgotten world. Clara began to paint her own interpretations of the landscape, her art evolving. One day, she found a hidden compartment in the painting's frame, revealing a journal detailing the artist's journey to that very world.",
+            "In a city where thoughts were audible, Elara lived in silence, her mind guarded. A mysterious plague made the city's thoughts silent. Elara, burdened with the unspoken words of the afflicted, discovered she could amplify her silence into a powerful sound. Her amplified silence soothed the afflicted, proving that some noises are better left unheard.",
+            "A tiny star, Leo, fell from the night sky. He landed in a field of glowing flowers. The flowers sheltered him, protecting him from the harsh world. Leo, feeling safe, grew brighter, illuminating the flowers. One night, the other stars noticed his light and guided him back to the sky. ",
+            "Once upon a time, there was a mighty elephant who was very proud of his strength. One day, he saw a group of tiny ants struggling to carry their food. The elephant laughed at their efforts and refused to help. But soon, the elephant got stuck in a trap, and it was the ants who saved him. The moral of the story is that we should never underestimate the power of others, no matter how small they are.",
+            "In a magical forest, there were two birds who could talk. One bird was always kind and helpful, while the other bird was selfish and mean. One day, a hunter captured the talking birds and planned to sell them. The kind bird managed to escape and flew to get help. With the help of other animals, they rescued the mean bird too. From that day on, the mean bird learned the value of kindness. The moral of the story is that kindness is always rewarded."
+        ]
+        let randomIndex=Math.floor(Math.random()*texts.length);
+        let randomText=texts[randomIndex];
+        document.getElementById("given-text").innerHTML=randomText;
+
+        let startTime;
+        let ended=false;
+        let txt=document.getElementById("txt");
+        txt.addEventListener('keydown', function(){
+            if(!startTime){
+                startTime=new Date();
+            }
+        });
+
+        
+
+        txt.addEventListener('input', function(){
+            let typedVal=txt.value;
+            for(let i=0; i<typedVal.length; i++){
+                if(randomText.charAt(i)===txt.value.charAt(i)){
+                    txt.style.color='green';
+                }else{
+                    txt.style.color="red";
+                    break;
+                }
+            }
+
+            if(!ended && txt.value.trim().startsWith(randomText.trim())){
+                let endTime=new Date();
+                ended=true;
+
+                let timeTaken=(endTime-startTime)/1000;
+                let wordCount=randomText.split(" ").length;
+                let speed=Math.round((wordCount/timeTaken)*60);
+
+                document.getElementById("result").innerHTML=`<strong>Well Done!</strong><br>
+                Time: ${timeTaken.toFixed(2)} seconds<br>
+                Speed: ${speed} WPM`;
+            
+            }
+        });
+
+
+    </script>
+</body>
+</html>
