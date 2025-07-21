@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASK-28</title>
+    <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+    <h1>BASIC ROCK, PAPER, SCISSOR GAME</h1>
+    <p>Choose one of the three options: Rock, Paper, or Scissor</p>
+    <select id="userSelect">
+        <option value="">Choose an option</option>
+        <option value="Rock">Rock</option>
+        <option value="Paper">Paper</option>
+        <option value="Scissor">Scissor</option>
+    </select>
+    <div id="result"></div>
+
+    <script>
+        let choice=["Rock", "Paper", "Scissor"];
+
+        let res=document.getElementById("result");
+        document.getElementById("userSelect").addEventListener("change", function(){
+            let userChoice=document.getElementById("userSelect").value;
+
+            let idx=Math.floor(Math.random()*choice.length);
+            let computerChoice=choice[idx];
+
+            console.log("user choice: ", userChoice);
+            console.log("computer choice: ", computerChoice);
+            
+            res.innerHTML=`Your choice: ${userChoice} <br> Computer Choice: ${computerChoice}`;
+            if(userChoice===""){
+                res.innerHTML="Choose a valid option!!";
+                return;
+            }
+            if(userChoice===computerChoice){
+                res.innerHTML+=`<br>Oh no! Seems like you have to play again.`;
+            }
+            else if
+            ((userChoice==="Paper" && computerChoice==="Rock" )||
+            (userChoice==="Rock" && computerChoice==="Scissor" )||
+            (userChoice==="Scissor" && computerChoice==="Paper" ))
+            {
+                res.innerHTML+=`<br>Congrats you won!`;
+            }
+            else{
+                res.innerHTML+=`<br>Better luck next time`;
+            }
+            document.getElementById("userSelect").value=""; // so that user can always have all 3 options available.
+
+        }); 
+    </script>
+</body>
+</html>

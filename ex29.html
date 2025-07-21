@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TASK-29</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 100px;
+    }
+    .container div {
+      height: 200px;
+      width: 300px;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .container p {
+      font-size: 1.3em;
+    }
+    #select {
+      width: 300px;
+      height: 50px;
+      border-radius: 10px;
+      background-color: beige;
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+    
+    #p1Select {
+      width: 300px;
+      height: 50px;
+      border-radius: 10px;
+      background-color: rgb(237, 137, 237);
+      font-size: 1.2em;
+      margin-top: 20px;
+    }   
+    #p2Select {
+      width: 300px;
+      height: 50px;
+      border-radius: 10px;
+      background-color: rgb(139, 139, 234);
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+    #nextBtn{
+        height: 30px;
+        margin-top: 10px;
+        background-color: beige;
+    }
+  </style>
+</head>
+<body>
+  <div id="firstPage">
+    <h1>ROCK, PAPER, SCISSOR GAME</h1>
+    <p>Hi there! How would you like to play?</p>
+    <div class="container">
+      <div id="frnd">
+        <img src="/images/team.png" alt="team" height="150px" />
+        <p>With a Friend</p>
+      </div>
+      <div id="online">
+        <img src="/images/online.png" alt="online" height="150px" />
+        <p>With Computer</p>
+      </div>
+    </div>
+  </div>
+  <div id="game"></div>
+
+  <script>
+    let friend = document.getElementById("frnd");
+    let computer = document.getElementById("online");
+    let firstPage = document.getElementById("firstPage");
+    let game = document.getElementById("game");
+
+    friend.addEventListener("click", function () {
+      firstPage.hidden = true;
+      let chances = 5;
+      let p1Score = 0;
+      let p2Score = 0;
+
+      game.innerHTML=
+      `<h2 id="head">Chances Left: ${chances}</h2>
+      <div id="p1Area">
+        <p>Player 1, choose your move: </p>
+            <select id="p1Select">
+                <option value="">Choose any option</option>
+                <option value="Rock">Rock</option>
+                <option value="Paper">Paper</option>
+                <option value="Scissor">Scissor</option>
+            </select>
+            <br>
+            <button id="nextBtn" disabled>Next</button>
+        </div>
+        <div id="p2Area" style="display: none;">
+            <p>Player 2, choose your move: </p>
+            <select id="p2Select">
+                <option value="">Choose any option</option>
+                <option value="Rock">Rock</option>
+                <option value="Paper">Paper</option>
+                <option value="Scissor">Scissor</option>
+            </select>
+        </div>
+        <div id="curRes"></div>
+        <div id="finalScore"></div>`;
+
+        let nextBtn=document.getElementById("nextBtn");
+        let head=document.getElementById("head");
+        let p1Select=document.getElementById("p1Select");
+        let p2Select=document.getElementById("p2Select");
+        let curRes=document.getElementById("curRes");
+        let finalScore=document.getElementById("finalScore");
+        let p2Area=document.getElementById("p2Area");
+
+        let p1="";
+        let p2="";
+
+        p1Select.addEventListener("change", function(){
+            if(p1Select.value!==""){
+                nextBtn.disabled=false;
+            }else{
+                nextBtn.disabled=true;
+            }
+        });
+
+        nextBtn.addEventListener("click", function(){
+            p1 = p1Select.value;
+            p1Select.value = "";
+            nextBtn.disabled = true;
+
+            document.getElementById("p1Area").style.display = "none";
+            p2Area.style.display = "block";
+        });
+
+
+        p2Select.addEventListener("change", function(){
+            p2=p2Select.value;
+
+            if(!p1|| !p2){
+                return;
+            }
+            let result="";
+            if (p1 === p2) {
+                result = "It's a draw!";
+            } else if (
+            (p1 === "Paper" && p2 === "Rock") ||
+            (p1 === "Rock" && p2 === "Scissor") ||
+            (p1 === "Scissor" && p2 === "Paper")
+            ) {
+                p1Score++;
+                result = "P1 win!";
+            } else {
+                p2Score++;
+                result = "P2 win!";
+            }
+
+            chances--;
+            head.innerHTML = `Chances Left: ${chances}`;
+            curRes.innerHTML += `<br>Player 1 choice: ${p1} | Player 2 choice: ${p2} → <b>${result}</b>`;
+            p1Select.value = "";
+            p2Select.value = "";
+            p1Area.style.display="block";
+            p2Area.style.display="none";
+            nextBtn.disabled=true;
+
+            if (chances === 0) {
+            let finalMsg =
+                p1Score > p2Score
+                ? "Player 1 is the winner!"
+                : p1Score < p2Score
+                ? "Player 2 is the Winner!"
+                : "It's a Tie!";
+
+            finalScore.innerHTML = `
+                <hr><h3>Game Over</h3>
+                <p>Player 1 Score: ${p1Score}</p>
+                <p>Player 2 Score: ${p2Score}</p>
+                <h2>${finalMsg}</h2>
+            `;
+            p1Area.style.display="none";
+            p2Area.style.display="none";
+            };
+        });
+        
+    });
+
+    computer.addEventListener("click", function () {
+      firstPage.hidden = true;
+      let chances = 5;
+      let uScore = 0;
+      let cScore = 0;
+
+      game.innerHTML = `
+        <h2 id="head">Chances Left: ${chances}</h2>
+        <select id="select">
+          <option value="">Choose any option</option>
+          <option value="Rock">Rock</option>
+          <option value="Paper">Paper</option>
+          <option value="Scissor">Scissor</option>
+        </select>
+        <div id="curRes"></div>
+        <div id="finalScore"></div>
+      `;
+
+      let options = ['Rock', 'Paper', 'Scissor'];
+      let select = document.getElementById("select");
+      let head = document.getElementById("head");
+      let curRes = document.getElementById("curRes");
+      let finalScore = document.getElementById("finalScore");
+
+      select.addEventListener("change", function () {
+        if (chances <= 0) return;
+
+        let uOp = select.value;
+        let cOp = options[Math.floor(Math.random() * 3)];
+
+        if (uOp === "") {
+          curRes.innerHTML += "<br>Please select a valid option!";
+          return;
+        }
+
+        let result = "";
+
+        if (uOp === cOp) {
+          result = "It's a draw!";
+        } else if (
+          (uOp === "Paper" && cOp === "Rock") ||
+          (uOp === "Rock" && cOp === "Scissor") ||
+          (uOp === "Scissor" && cOp === "Paper")
+        ) {
+          uScore++;
+          result = "You win!";
+        } else {
+          cScore++;
+          result = "Computer wins!";
+        }
+
+        chances--;
+        head.innerHTML = `Chances Left: ${chances}`;
+        curRes.innerHTML += `<br>Your choice: ${uOp} | Computer choice: ${cOp} → <b>${result}</b>`;
+        select.value = "";
+
+        if (chances === 0) {
+          let finalMsg =
+            uScore > cScore
+              ? "You are the Winner!"
+              : uScore < cScore
+              ? "Computer Wins!"
+              : "It's a Tie!";
+
+          finalScore.innerHTML = `
+            <hr><h3>Game Over</h3>
+            <p>Your Score: ${uScore}</p>
+            <p>Computer Score: ${cScore}</p>
+            <h2>${finalMsg}</h2>
+          `;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
