@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASK-30</title>
+    <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    textarea {
+      width: 80%;
+      height: 100px;
+      font-size: 1em;
+    }
+    select, input {
+      margin: 10px;
+      padding: 5px;
+    }
+    </style>
+</head>
+<body>
+    <h1>TEXT TO SPEECH</h1>
+    <textarea rows="10" cols="50" id="text" placeholder="Type Something..."></textarea>
+    <br>
+    <label for="voiceSelect">Select Voice: </label>
+    <select id="voiceSelect"></select>
+    <br>
+
+    <label for="rate">Rate: </label>
+    <input type="range" id="rate" min="0.5" max="2" value="1" step="0.1">
+    <span id="rateVal">1</span>
+    <br>
+
+    <label for="pitch">Pitch</label>
+    <input type="range" id="pitch" min="0" max="2" value="1" step="0.1">
+    <span id="pitchVal">1</span>
+    <br>
+
+    <button onClick="speak()">Speak</button>
+    <button onclick="pause()">Pause</button>
+    <button onclick="resume()">Resume</button>
+    <button onclick="stop()">Stop</button>
+
+    
+    <script>
+        window.speechSynthesis.cancel();
+        const synth=window.speechSynthesis;
+        const voiceSelect = document.getElementById('voiceSelect');
+        const rateInput = document.getElementById('rate');
+        const pitchInput = document.getElementById('pitch');
+        const rateVal = document.getElementById('rateVal');
+        const pitchVal = document.getElementById('pitchVal');
+
+        let voices=[];
+        let currentUtterance;
+
+        populateVoices=()=>{
+            voices=synth.getVoices();
+            voiceSelect.innerHTML='';
+            voices.forEach((voice,i)=>{
+                const option=document.createElement("option");
+                option.value=i;
+                option.textContent=`${voice.name} (${voice.lang})`;
+                voiceSelect.appendChild(option);
+            })
+        }
+
+        synth.onvoiceschanged=populateVoices;
+
+        rateInput.oninput=()=>{
+            rateVal.textContent=rateInput.value;
+        }
+        pitchInput.oninput=()=>{
+            pitchVal.textContent=pitchInput.value;
+        }
+
+        speak = () =>{
+            const text=document.getElementById("text").value;
+            if(synth.speaking){
+                synth.cancel();
+            }
+            currentUtterance=new SpeechSynthesisUtterance(text);
+
+            const selectedVoice=voices[voiceSelect.value];
+            currentUtterance.voice=selectedVoice;
+            currentUtterance.rate=parseFloat(rateInput.value);
+            currentUtterance.pitch=parseFloat(pitchInput.value);
+
+            synth.speak(currentUtterance);
+        }
+
+        pause = ()=>{
+            if(synth.speaking && !synth.paused){
+                synth.pause();
+            }
+        }
+
+        resume=()=>{
+            if(synth.paused){
+                synth.resume();
+            }
+        }
+        
+        stop=()=>{
+            if(synth.speaking){
+                synth.cancel();
+            }
+        }
+
+
+    </script>
+
+</body>
+</html>
