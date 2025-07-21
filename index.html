@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS-Practice</title>
     <style>
+    body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+    #links{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        column-gap: 20px;
+        width: 500px;
+        margin: auto;
+    }
     button {
         padding: 10px 20px;
         margin: 5px;
@@ -28,7 +43,9 @@
     <h4>Welcome to my JavaScript Practice Hub.</h4>
     <p>This page contains all the exercises I've completed while learning JavaScript.<br>
     Click on any button below to explore my work.</p>
-    <div id="links"></div>
+    <div class="container">
+        <div id="links"></div>
+    </div>
     <script>
         let str = "";
         for(let i=1; i<=30; i++){
