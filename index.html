@@ -15,14 +15,15 @@
     }
     #links{
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        column-gap: 20px;
-        width: 500px;
+        grid-template-columns: repeat(3, 150px);
+        gap: 20px;
+        justify-content: center;
         margin: auto;
     }
     button {
-        padding: 10px 20px;
-        margin: 5px;
+        padding: 10px;
+        width: 150px;
+        font-size: 15px;
         border-radius: 5px;
         background-color: royalblue;
         color: white;
@@ -35,6 +36,16 @@
     }
     body h3, h4, p{
         text-align: center;
+    }
+    @media (max-width: 600px ){
+        #links{
+            grid-template-columns: repeat(2, 150px);
+        }
+    }
+    @media (max-width: 400px ){
+        #links{
+            grid-template-columns: repeat(2, 150px);
+        }
     }
 </style>
 
