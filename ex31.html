@@ -16,7 +16,7 @@
         background-color: rgba(240, 76, 76, 0.448);
         margin-left: auto;
         margin-right: auto;
-        margin-top: 30px;
+        margin-top: 10px;
     }
     .timings{
         padding-top: 20px;
@@ -24,7 +24,6 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        
     }
     .timing{
         background-color: rgb(135, 10, 10);
@@ -71,6 +70,29 @@
         height: 130px;
         width: 350px;
     }
+    .ownTime{
+        margin-top: 30px;
+        height: 120px;
+        width: 400px;
+        background-color: pink;
+    }
+    .ownTime h3{
+        padding-top: 10px;
+    }
+    .ownTime #userTime{
+        width: 100px;
+        height: 22px;
+        border-radius: 12px;
+        border: 1px solid gray;
+    }
+    .ownTime button{
+        color: black;
+        background-color: rgb(98, 234, 98);
+        border-radius: 50%;
+        height: 25px;
+        position: absolute;
+        right: 255px;
+    }
     </style>
 </head>
 <body>
@@ -87,79 +109,111 @@
             </div>
             <button id="start">START</button>
         </div>
+        <div class="ownTime">
+            <h3>Would you like to set your own time?
+            <em>(in minutes)</em> </h3>
+            <input type="number" id="userTime" min="1" max="60" />
+            <button id="ownBtn" onClick="resetTimer(userTime.value * 60)">✔</button>
+        </div>
     </div>
     <audio id="alarmSound">
         <source src="/images/timeup.wav" type="audio/mpeg">
     </audio>
+    
+    <audio id="mouseClick">
+        <source src="/images/click.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        let pom=document.getElementById("pom");
-        let time=document.getElementById("timeShow");
-        let startBtn=document.getElementById("start");
-        let short=document.getElementById("sb");
-        let long=document.getElementById("lb");
-        let sound=document.getElementById("alarmSound");
-        let timeInterval;
-        let totalTime=25*60; //25 minutes
+    let pom = document.getElementById("pom");
+    let time = document.getElementById("timeShow");
+    let startBtn = document.getElementById("start");
+    let short = document.getElementById("sb");
+    let long = document.getElementById("lb");
+    let ownBtn=document.getElementById("ownBtn");
+    let sound = document.getElementById("alarmSound");
+    let clickSound=document.getElementById("mouseClick");
+    let timeInterval = null;
+    let totalTime = 25 * 60; //25 minutes
+    let isRunning = false;
 
-        updateTimerDisplay=()=>{
-            let min=Math.floor(totalTime/60);
-            let sec=totalTime%60;
-            time.innerHTML=`${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
-        }
-        let isRunning=false;
-        startBtn.addEventListener("click", ()=>{
-            if(!isRunning){
-                isRunning=true;
-                startBtn.innerHTML='PAUSE';
-                timeInterval = setInterval(()=>{
-                    if(totalTime>0){
-                        totalTime--;
-                        updateTimerDisplay();
-                    }else{
-                        sound.load();
-                        sound.play();
-                        clearInterval(timeInterval);
-                        isRunning=false;
-                        startBtn.innerHTML="START";
-                        
-                    }
-                }, 1000);
-            }else{
-                clearInterval(timeInterval);
-                isRunning=false;
-                startBtn.innerHTML="START";
-            }
-        });
+    const updateTimerDisplay = () => {
+        let min = Math.floor(totalTime / 60);
+        let sec = totalTime % 60;
+        time.innerHTML = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+    };
+
+    const resetTimer = (newTime) => {
+        clearInterval(timeInterval);
+        timeInterval = null;
+        totalTime = newTime;
+        isRunning = false;
         updateTimerDisplay();
+        startBtn.innerHTML = "START";
+    };
 
-        pom.addEventListener("click", ()=>{
+    startBtn.addEventListener("click", () => {
+
+        if (!isRunning) {
+            isRunning = true;
+            startBtn.innerHTML = 'PAUSE';
+            timeInterval = setInterval(() => {
+                if (totalTime > 0) {
+                    totalTime--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(timeInterval);
+                    timeInterval = null;
+                    isRunning = false;
+                    startBtn.innerHTML = "START";
+                    sound.load();
+                    sound.play();
+                }
+            }, 1000);
+        } else {
             clearInterval(timeInterval);
-            timerInterval=null;
-            totalTime=25*60;
-            isRunning=false;
-            updateTimerDisplay();
-            startBtn.innerHTML="START";
-        });
+            timeInterval = null;
+            isRunning = false;
+            startBtn.innerHTML = "START";
+        }
+    });
 
-        short.addEventListener("click", ()=>{
-            clearInterval(timerInterval);
-            timerInterval=null;
-            totalTime=15;
-            isRunning=false;
-            updateTimerDisplay();
-            startBtn.innerHTML="START";
-        })
+    pom.addEventListener("click", () =>{
+        resetTimer(25 * 60)
+    });//25 mins
+    short.addEventListener("click", () => {
+        resetTimer(15)
+    });//15 secs
+    long.addEventListener("click", () =>{
+        resetTimer(40 * 60)
+    });//40 mins
 
-        long.addEventListener("click", ()=>{
-            clearInterval(timerInterval);
-            timerInterval=null;
-            totalTime=60*60;
-            isRunning=false;
-            updateTimerDisplay();
-            startBtn.innerHTML="START";
-        })
+    pom.addEventListener("mousedown", ()=>{
+        clickSound.load();
+        clickSound.play();
+    })
+    start.addEventListener("mousedown", ()=>{
+        clickSound.load();
+        clickSound.play();
+    })
+    long.addEventListener("mousedown", ()=>{
+        clickSound.load();
+        clickSound.play();
+    })
+    short.addEventListener("mousedown", ()=>{
+        clickSound.load();
+        clickSound.play();
+    })
+    pom.addEventListener("mousedown", ()=>{
+        clickSound.load();
+        clickSound.play();
+    })
+    ownBtn.addEventListener("mousedown", ()=>{
+        clickSound.load();
+        clickSound.play();
+    })
+    updateTimerDisplay();
+</script>
 
-    </script>
 </body>
 </html>
