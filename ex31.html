@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TASK-31</title>
+    <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      transition: transform 0.5 ease;
+    }
+    .container{
+        height: 400px;
+        width: 400px;
+        background-color: rgba(240, 76, 76, 0.448);
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 30px;
+    }
+    .timings{
+        padding-top: 20px;
+        font-size: 1.5em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+    }
+    .timing{
+        background-color: rgb(135, 10, 10);
+        color: white;
+        width: 200px;
+        height: 40px;
+        margin: 10px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 3px 2px 2px rgb(76, 9, 9);
+    }
+    .timing:active{
+        transform: scale(0.95);
+        box-shadow: 0 1px 2px 2px rgba(76, 9, 9);
+        padding-top: 10px;
+    }
+    .time{
+        margin-top: 30px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: rgba(253, 121, 145, 0.76);
+        height: 250px;
+        width: 350px;
+    }
+    #start{
+        background-color: rgb(249, 65, 96);
+        color: white;
+        width: 120px;
+        height: 50px;
+        border-radius: 10px 30px 10px 30px;
+        font-size: 1.5em;
+        cursor: pointer;
+    }
+    #start:active{
+        transform: scale(0.95);
+    }
+    #timeShow{
+        font-size: 6rem;
+        color: white;
+    }
+    .timeDisplay{
+        padding-top: 50px;
+        height: 130px;
+        width: 350px;
+    }
+    </style>
+</head>
+<body>
+    <h1>POMODORO TIMER</h1>
+    <div class="container">
+        <div class="timings">
+            <button class="timing" id="pom">POMODORO</button>
+            <button class="timing" id="sb">SHORT BREAK</button>
+            <button class="timing" id="lb">LONG BREAK</button>
+        </div>
+        <div class="time">
+            <div class="timeDisplay">
+                <div id="timeShow"></div>
+            </div>
+            <button id="start">START</button>
+        </div>
+    </div>
+    <audio id="alarmSound">
+        <source src="/images/timeup.wav" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let pom=document.getElementById("pom");
+        let time=document.getElementById("timeShow");
+        let startBtn=document.getElementById("start");
+        let short=document.getElementById("sb");
+        let long=document.getElementById("lb");
+        let sound=document.getElementById("alarmSound");
+        let timeInterval;
+        let totalTime=25*60; //25 minutes
+
+        updateTimerDisplay=()=>{
+            let min=Math.floor(totalTime/60);
+            let sec=totalTime%60;
+            time.innerHTML=`${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
+        }
+        let isRunning=false;
+        startBtn.addEventListener("click", ()=>{
+            if(!isRunning){
+                isRunning=true;
+                startBtn.innerHTML='PAUSE';
+                timeInterval = setInterval(()=>{
+                    if(totalTime>0){
+                        totalTime--;
+                        updateTimerDisplay();
+                    }else{
+                        sound.load();
+                        sound.play();
+                        clearInterval(timeInterval);
+                        isRunning=false;
+                        startBtn.innerHTML="START";
+                        
+                    }
+                }, 1000);
+            }else{
+                clearInterval(timeInterval);
+                isRunning=false;
+                startBtn.innerHTML="START";
+            }
+        });
+        updateTimerDisplay();
+
+        pom.addEventListener("click", ()=>{
+            clearInterval(timeInterval);
+            timerInterval=null;
+            totalTime=25*60;
+            isRunning=false;
+            updateTimerDisplay();
+            startBtn.innerHTML="START";
+        });
+
+        short.addEventListener("click", ()=>{
+            clearInterval(timerInterval);
+            timerInterval=null;
+            totalTime=15;
+            isRunning=false;
+            updateTimerDisplay();
+            startBtn.innerHTML="START";
+        })
+
+        long.addEventListener("click", ()=>{
+            clearInterval(timerInterval);
+            timerInterval=null;
+            totalTime=60*60;
+            isRunning=false;
+            updateTimerDisplay();
+            startBtn.innerHTML="START";
+        })
+
+    </script>
+</body>
+</html>
